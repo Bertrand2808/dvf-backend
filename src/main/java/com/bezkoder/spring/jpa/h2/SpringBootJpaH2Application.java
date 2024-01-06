@@ -8,11 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
 @SpringBootApplication
+@EnableScheduling
 public class SpringBootJpaH2Application {
 
 //	public static void main(String[] args) {
@@ -36,10 +38,9 @@ public class SpringBootJpaH2Application {
 		@EventListener(ApplicationReadyEvent.class)
 		public void runAfterStartup() throws FileNotFoundException {
 
-			importationService.importerDonnees();
-
+//			importationService.importerDonnees();
 			// Dans une méthode appropriée
-			pdfGeneratorService.genererRapportTransactions();
+//			pdfGeneratorService.genererRapportTransactions(); // commenter le temps de tester la méthode planifiée d'importation
 
 		}
 
