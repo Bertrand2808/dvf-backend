@@ -37,7 +37,7 @@ public class SpringBootJpaH2Application {
 
 		@EventListener(ApplicationReadyEvent.class)
 		public void runAfterStartup() throws FileNotFoundException {
-
+			System.out.println("Serveur run on : " + "http://localhost:8080");
 //			importationService.importerDonnees();
 			// Dans une méthode appropriée
 //			pdfGeneratorService.genererRapportTransactions(); // commenter le temps de tester la méthode planifiée d'importation
