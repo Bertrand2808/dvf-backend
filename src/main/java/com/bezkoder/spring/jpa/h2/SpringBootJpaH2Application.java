@@ -1,6 +1,5 @@
 package com.bezkoder.spring.jpa.h2;
 
-import com.bezkoder.spring.jpa.h2.service.CSVReaderParcelles;
 import com.bezkoder.spring.jpa.h2.service.ImportationService;
 import com.bezkoder.spring.jpa.h2.service.PdfGenerateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 
 @SpringBootApplication

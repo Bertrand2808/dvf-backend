@@ -21,7 +21,7 @@ public class ImportationService {
 
     // Position actuelle dans le fichier CSV
     private int currentLine = 0;
-    String cheminFichier = "E:/Documents_HDD/ssd/Cours_ESGI/M1/ArchitectureLogicielle/full.csv";
+    String cheminFichier = "src/main/resources/parcelles.csv";
 
     // Méthode pour importer les données du fichier CSV
     public void importerDonnees() {
@@ -61,7 +61,7 @@ public class ImportationService {
 //    @Scheduled(fixedRate = 30000)
     public void importCsvData() {
         try {
-            Reader reader = Files.newBufferedReader(Paths.get("E:/Documents_HDD/ssd/Cours_ESGI/M1/ArchitectureLogicielle/full.csv"));
+            Reader reader = Files.newBufferedReader(Paths.get(cheminFichier));
             CsvToBean<Transaction> csvToBean = new CsvToBeanBuilder<Transaction>(reader)
                     .withType(Transaction.class)
                     .withIgnoreLeadingWhiteSpace(true)
