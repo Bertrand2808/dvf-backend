@@ -16,16 +16,6 @@ import java.io.FileNotFoundException;
 @SpringBootApplication
 @EnableScheduling
 public class SpringBootJpaH2Application {
-
-//	public static void main(String[] args) {
-//		try {
-//			CSVReaderParcelles csvReaderParcelles = new CSVReaderParcelles();
-//			csvReaderParcelles.read(new File("E:/Documents_HDD/ssd/Cours_ESGI/M1/ArchitectureLogicielle/full.csv"));
-//		} catch (Exception e) {
-//			e.printStackTrace(); // Handle the exception according to your requirements
-//		}
-//		SpringApplication.run(SpringBootJpaH2Application.class, args);
-//	}
 	@Autowired
 	private ImportationService importationService;
 		@Autowired

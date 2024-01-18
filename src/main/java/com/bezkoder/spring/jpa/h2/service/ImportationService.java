@@ -22,9 +22,32 @@ public class ImportationService {
     // Position actuelle dans le fichier CSV
     private int currentLine = 0;
     String cheminFichier = "E:/Documents_HDD/ssd/Cours_ESGI/M1/ArchitectureLogicielle/full.csv";
+    @Scheduled(fixedDelay = 1000)
+    public void importCsvData() {
+        System.out.println("Importing CSV data...");
+        System.out.println(java.time.LocalTime.now());
+        try {
+            Reader reader = Files.newBufferedReader(Paths.get("E:/Documents_HDD/ssd/Cours_ESGI/M1/ArchitectureLogicielle/full.csv"));
+            CsvToBean<Transaction> csvToBean = new CsvToBeanBuilder<Transaction>(reader)
+                    .withType(Transaction.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+
+            List<Transaction> transactions = csvToBean.parse();
+            int endLine = Math.min(currentLine + 10, transactions.size());
+            for (Transaction transaction : transactions.subList(currentLine, endLine)) {
+                System.out.println("Adresse Nom Voie: " + transaction.getAdresseNomVoie());
+                transactionsRepository.save(transaction);
+            }
+            currentLine = endLine;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     // Méthode pour importer les données du fichier CSV
     public void importerDonnees() {
+        System.out.println("Importing first 10 CSV data...");
         try (FileReader fileReader = new FileReader(cheminFichier)) {
             List<Transaction> transactions = new CsvToBeanBuilder(fileReader)
                     .withType(Transaction.class)
@@ -57,25 +80,5 @@ public class ImportationService {
             e.printStackTrace();
         }
 
-    }
-//    @Scheduled(fixedRate = 30000)
-    public void importCsvData() {
-        try {
-            Reader reader = Files.newBufferedReader(Paths.get("E:/Documents_HDD/ssd/Cours_ESGI/M1/ArchitectureLogicielle/full.csv"));
-            CsvToBean<Transaction> csvToBean = new CsvToBeanBuilder<Transaction>(reader)
-                    .withType(Transaction.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
-
-            List<Transaction> transactions = csvToBean.parse();
-            int endLine = Math.min(currentLine + 10, transactions.size());
-            for (Transaction transaction : transactions.subList(currentLine, endLine)) {
-                System.out.println("Adresse Nom Voie: " + transaction.getAdresseNomVoie());
-                transactionsRepository.save(transaction);
-            }
-            currentLine = endLine;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
