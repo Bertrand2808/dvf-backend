@@ -2,10 +2,15 @@ package com.bezkoder.spring.jpa.h2.controller;
 
 import com.bezkoder.spring.jpa.h2.business.Transaction;
 import com.bezkoder.spring.jpa.h2.repository.TransactionRepository;
+import com.bezkoder.spring.jpa.h2.service.PdfGenerateurService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,34 +18,31 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api")
 public class RechercheController {
     private final TransactionRepository transactionRepository;
-    @Autowired
-    public RechercheController(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
-    }
+    private final PdfGenerateurService pdfGenerateurService;
     private static final double EARTH_RADIUS = 6371e3; // en mètres
 
     @GetMapping ("/transactions")
-    public ResponseEntity<List<Transaction>> rechercher(
+    public ResponseEntity<byte[]> rechercher(
             @RequestParam(name = "latitude") double latitude,
             @RequestParam(name = "longitude") double longitude,
-            @RequestParam(name = "rayon") double rayon ) {
+            @RequestParam(name = "rayon") double rayon ) throws IOException {
 
         System.out.println("Latitude : " + latitude);
         System.out.println("Longitude : " + longitude);
         System.out.println("Rayon : " + rayon);
 
-//        List<Map<String, Double>> points = calculerTransactions(latitude, longitude, rayon);
-//        return ResponseEntity.ok().body(Map.of("points", points));
-
-        List<Transaction> allTransactions = transactionRepository.findAll();
-        List<Transaction> transactionsDansRayon = allTransactions.stream()
-                .filter(t -> calculerDistance(latitude, longitude, t.getLatitude(), t.getLongitude()) <= rayon)
-                .collect(Collectors.toList());
-        System.out.println("Nombre de transactions dans le rayon : " + transactionsDansRayon.size());
-        return ResponseEntity.ok().body(transactionsDansRayon);
+        byte[] pdfBytes = pdfGenerateurService.pdfGenerate(latitude, longitude, rayon);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=rapport.pdf");
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(pdfBytes.length)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
     }
 
     private List<Map<String, Double>> calculerTransactions(double latitude, double longitude, double rayon) {
@@ -76,4 +78,3 @@ public class RechercheController {
         return EARTH_RADIUS * c; // Distance en mètres
     }
 }
-

@@ -55,3 +55,21 @@ Database is already closed (to disable automatic closing at VM shutdown, add ";D
 2024-01-18T10:08:33.796+01:00  WARN 1684 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2024-01-18T10:08:45.622+01:00  WARN 1684 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
 Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
+2024-01-22T16:12:01.759+01:00  WARN 3320 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'pdfReceiver' defined in file [E:\Documents_HDD\ssd\Cours_ESGI\M1\ArchitectureLogicielle\dvf-backend\target\classes\com\bezkoder\spring\jpa\h2\service\PdfReceiver.class]: Could not register JMS listener endpoint on [public void com.bezkoder.spring.jpa.h2.service.PdfReceiver.receiveMessage(java.lang.String)], no JmsListenerContainerFactory with id 'myFactory' was found in the application context
+2024-01-22T16:12:01.992+01:00  WARN 3320 --- [restartedMain] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
+2024-01-22T16:12:02.021+01:00 ERROR 3320 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+A component required a bean named 'myFactory' that could not be found.
+
+
+Action:
+
+Consider defining a bean named 'myFactory' in your configuration.
+
