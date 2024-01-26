@@ -45,11 +45,11 @@ public class SpringBootJpaH2Application {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(SpringBootJpaH2Application.class, args);
 		JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
+		System.out.println("test");
 	}
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void runAfterStartup() throws FileNotFoundException {
 		System.out.println("Application started ... launching importation");
 	}
-
 }
