@@ -1,9 +1,7 @@
 package com.bezkoder.spring.jpa.h2;
 import jakarta.jms.ConnectionFactory;
 import com.bezkoder.spring.jpa.h2.service.ImportationService;
-import com.bezkoder.spring.jpa.h2.service.PdfGenerateurService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
@@ -20,10 +18,6 @@ import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import java.io.FileNotFoundException;
-import java.util.logging.Logger;
-
-
-
 
 @SpringBootApplication
 @EnableScheduling
@@ -36,13 +30,11 @@ public class SpringBootJpaH2Application {
 	public JmsListenerContainerFactory<?> myFactory(ConnectionFactory connectionFactory,
 													DefaultJmsListenerContainerFactoryConfigurer configurer) {
 		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-		// This provides all auto-configured defaults to this factory, including the message converter
 		configurer.configure(factory, connectionFactory);
-		// You could still override some settings if necessary.
 		return factory;
 	}
 
-	@Bean // Serialize message content to json using TextMessage
+	@Bean
 	public MessageConverter jacksonJmsMessageConverter() {
 		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
 		converter.setTargetType(MessageType.TEXT);
@@ -58,10 +50,6 @@ public class SpringBootJpaH2Application {
 	@EventListener(ApplicationReadyEvent.class)
 	public void runAfterStartup() throws FileNotFoundException {
 		System.out.println("Application started ... launching importation");
-//			importationService.importerDonnees();
-		// Dans une méthode appropriée
-//			pdfGeneratorService.genererRapportTransactions(); // commenter le temps de tester la méthode planifiée d'importation
-
 	}
 
 }

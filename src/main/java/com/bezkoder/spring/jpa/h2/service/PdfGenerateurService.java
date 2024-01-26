@@ -36,13 +36,13 @@ public class PdfGenerateurService {
         document.close();
     }
 
-    public byte[] pdfGenerate(double latitude, double longitude, double rayon) throws IOException {
-        String fileName = "rapport_" + System.currentTimeMillis() + ".pdf";
-        String path = "src/main/resources/" + fileName;
+    public byte[] pdfGenerate(String path, double latitude, double longitude, double rayon) throws IOException {
+//        String fileName = "rapport_" + System.currentTimeMillis() + ".pdf";
+//        String path = "src/main/resources/" + fileName;
         PdfWriter writer = new PdfWriter(path);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
-        document.add(new Paragraph("Rapport des Transactions comprises dans le rayon de " + rayon + "mètres autour de la position :"));
+        document.add(new Paragraph("Rapport des Transactions comprises dans le rayon de " + rayon + " mètres autour de la position :"));
         document.add(new Paragraph("Latitude saisie : " + latitude));
         document.add(new Paragraph("Longitude saisie : " + longitude));
         document.add(new Paragraph("--------------------------------------"));
@@ -76,9 +76,27 @@ public class PdfGenerateurService {
         document.close();
         byte[] pdfBytes = Files.readAllBytes(Paths.get(path));
         Files.delete(Paths.get(path));
+        System.out.println("PDF généré : " + pdfBytes);
         return pdfBytes;
     }
 
+//    public String pdfGenerate(double latitude, double longitude, double rayon) throws IOException {
+//        String fileName = "rapport_" + System.currentTimeMillis() + ".pdf";
+//        String path = "src/main/resources/" + fileName;
+//
+//        PdfWriter writer = new PdfWriter(path);
+//        PdfDocument pdf = new PdfDocument(writer);
+//        Document document = new Document(pdf);
+//
+//        // Exemple de contenu - ajouter le contenu réel du PDF ici
+//        document.add(new Paragraph("Rapport des Transactions"));
+//        document.add(new Paragraph("Latitude: " + latitude));
+//        document.add(new Paragraph("Longitude: " + longitude));
+//        document.add(new Paragraph("Rayon: " + rayon));
+//
+//        document.close();
+//        return path;
+//    }
     public void sendPdfToQueue() {
         System.out.println("Envoi du pdf dans la queue");
         jmsMessageSender.send("pdfQueue", "pdf");

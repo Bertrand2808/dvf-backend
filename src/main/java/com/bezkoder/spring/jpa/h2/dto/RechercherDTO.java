@@ -29,4 +29,5 @@ public class RechercherDTO {
     public void setRayon(double rayon) {
         this.rayon = rayon;
     }
+
 }

@@ -1,64 +1,95 @@
-2024-01-18T08:24:58.126+01:00  WARN 13796 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:26:28.306+01:00  WARN 13796 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+2024-01-26T08:50:35.491+01:00  WARN 15648 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T08:56:44.057+01:00  WARN 15648 --- [Thread-1 (ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl$6@1bd44f94)] o.apache.activemq.artemis.core.server    : AMQ222225: Sending unexpected exception to the client
+
+java.lang.NoSuchMethodError: 'void org.apache.activemq.artemis.utils.collections.UpdatableIterator.removed(java.lang.Object)'
+	at org.apache.activemq.artemis.core.server.impl.QueueConsumersImpl.remove(QueueConsumersImpl.java:98) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.QueueImpl.removeConsumer(QueueImpl.java:1521) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.removeItself(ServerConsumerImpl.java:658) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.close(ServerConsumerImpl.java:589) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerSessionImpl.closeConsumer(ServerSessionImpl.java:1742) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.slowPacketHandler(ServerSessionPacketHandler.java:623) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.onMessagePacket(ServerSessionPacketHandler.java:315) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.utils.actors.Actor.doTask(Actor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:57) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run(ActiveMQThreadFactory.java:118) ~[artemis-commons-2.28.0.jar:na]
+
+2024-01-26T08:56:44.288+01:00  WARN 15648 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
 Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:26:37.167+01:00  WARN 20332 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:39:13.081+01:00  WARN 20332 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+2024-01-26T08:56:52.136+01:00  WARN 14196 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T08:59:25.820+01:00  WARN 14196 --- [Thread-0 (ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl$6@43487641)] o.apache.activemq.artemis.core.server    : AMQ222225: Sending unexpected exception to the client
+
+java.lang.NoSuchMethodError: 'void org.apache.activemq.artemis.utils.collections.UpdatableIterator.removed(java.lang.Object)'
+	at org.apache.activemq.artemis.core.server.impl.QueueConsumersImpl.remove(QueueConsumersImpl.java:98) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.QueueImpl.removeConsumer(QueueImpl.java:1521) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.removeItself(ServerConsumerImpl.java:658) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.close(ServerConsumerImpl.java:589) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerSessionImpl.closeConsumer(ServerSessionImpl.java:1742) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.slowPacketHandler(ServerSessionPacketHandler.java:623) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.onMessagePacket(ServerSessionPacketHandler.java:315) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.utils.actors.Actor.doTask(Actor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:57) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run(ActiveMQThreadFactory.java:118) ~[artemis-commons-2.28.0.jar:na]
+
+2024-01-26T08:59:26.044+01:00  WARN 14196 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
 Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:39:22.207+01:00  WARN 3688 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:40:02.603+01:00  WARN 3688 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+2024-01-26T08:59:33.661+01:00  WARN 19760 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T09:00:43.776+01:00  WARN 19760 --- [Thread-2 (ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl$6@17a3aa48)] o.apache.activemq.artemis.core.server    : AMQ222225: Sending unexpected exception to the client
+
+java.lang.NoSuchMethodError: 'void org.apache.activemq.artemis.utils.collections.UpdatableIterator.removed(java.lang.Object)'
+	at org.apache.activemq.artemis.core.server.impl.QueueConsumersImpl.remove(QueueConsumersImpl.java:98) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.QueueImpl.removeConsumer(QueueImpl.java:1521) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.removeItself(ServerConsumerImpl.java:658) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.close(ServerConsumerImpl.java:589) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerSessionImpl.closeConsumer(ServerSessionImpl.java:1742) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.slowPacketHandler(ServerSessionPacketHandler.java:623) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.onMessagePacket(ServerSessionPacketHandler.java:315) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.utils.actors.Actor.doTask(Actor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:57) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run(ActiveMQThreadFactory.java:118) ~[artemis-commons-2.28.0.jar:na]
+
+2024-01-26T09:00:44.014+01:00  WARN 19760 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
 Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:40:11.218+01:00  WARN 14884 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:41:10.100+01:00  WARN 14884 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+2024-01-26T09:00:51.261+01:00  WARN 12380 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T09:25:50.629+01:00  WARN 12380 --- [Thread-2 (ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl$6@66f5fbb1)] o.apache.activemq.artemis.core.server    : AMQ222225: Sending unexpected exception to the client
+
+java.lang.NoSuchMethodError: 'void org.apache.activemq.artemis.utils.collections.UpdatableIterator.removed(java.lang.Object)'
+	at org.apache.activemq.artemis.core.server.impl.QueueConsumersImpl.remove(QueueConsumersImpl.java:98) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.QueueImpl.removeConsumer(QueueImpl.java:1521) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.removeItself(ServerConsumerImpl.java:658) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.close(ServerConsumerImpl.java:589) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerSessionImpl.closeConsumer(ServerSessionImpl.java:1742) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.slowPacketHandler(ServerSessionPacketHandler.java:623) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.onMessagePacket(ServerSessionPacketHandler.java:315) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.utils.actors.Actor.doTask(Actor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:57) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run(ActiveMQThreadFactory.java:118) ~[artemis-commons-2.28.0.jar:na]
+
+2024-01-26T09:25:50.867+01:00  WARN 12380 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
 Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:42:32.317+01:00  WARN 7888 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:42:55.719+01:00  WARN 7888 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+2024-01-26T09:25:59.064+01:00  WARN 2704 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'pdfReceiver' defined in file [E:\Documents_HDD\ssd\Cours_ESGI\M1\ArchitectureLogicielle\dvf-backend\target\classes\com\bezkoder\spring\jpa\h2\service\PdfReceiver.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'com.bezkoder.spring.jpa.h2.config.MyWebSocketHandler' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2024-01-26T09:25:59.306+01:00  WARN 2704 --- [restartedMain] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
 Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:43:05.523+01:00  WARN 20108 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:43:39.169+01:00  WARN 20108 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:43:58.906+01:00  WARN 22480 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:44:28.332+01:00  WARN 22480 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:46:15.272+01:00  WARN 14544 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:46:36.637+01:00  WARN 14544 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:46:56.919+01:00  WARN 7696 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:47:06.509+01:00  WARN 7696 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:50:01.625+01:00  WARN 9456 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:52:19.030+01:00  WARN 9456 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:52:28.914+01:00  WARN 19056 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:53:45.195+01:00  WARN 19056 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:53:55.934+01:00  WARN 22020 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:54:28.816+01:00  WARN 22020 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:54:38.156+01:00  WARN 23696 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:54:59.498+01:00  WARN 23696 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T08:55:08.494+01:00  WARN 16356 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T08:57:50.113+01:00  WARN 16356 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T09:23:11.136+01:00  WARN 9392 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T09:25:08.889+01:00  WARN 9392 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T09:25:14.612+01:00  WARN 17632 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T09:26:59.335+01:00  WARN 17632 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T09:27:05.766+01:00  WARN 8512 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T09:28:04.393+01:00  WARN 8512 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T09:45:17.613+01:00  WARN 20872 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T09:51:19.781+01:00  WARN 20872 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-18T10:08:33.796+01:00  WARN 1684 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-01-18T10:08:45.622+01:00  WARN 1684 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-22T16:12:01.759+01:00  WARN 3320 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'pdfReceiver' defined in file [E:\Documents_HDD\ssd\Cours_ESGI\M1\ArchitectureLogicielle\dvf-backend\target\classes\com\bezkoder\spring\jpa\h2\service\PdfReceiver.class]: Could not register JMS listener endpoint on [public void com.bezkoder.spring.jpa.h2.service.PdfReceiver.receiveMessage(java.lang.String)], no JmsListenerContainerFactory with id 'myFactory' was found in the application context
-2024-01-22T16:12:01.992+01:00  WARN 3320 --- [restartedMain] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
-Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
-2024-01-22T16:12:02.021+01:00 ERROR 3320 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+2024-01-26T09:25:59.336+01:00 ERROR 2704 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
 
 ***************************
 APPLICATION FAILED TO START
@@ -66,10 +97,165 @@ APPLICATION FAILED TO START
 
 Description:
 
-A component required a bean named 'myFactory' that could not be found.
+Parameter 1 of constructor in com.bezkoder.spring.jpa.h2.service.PdfReceiver required a bean of type 'com.bezkoder.spring.jpa.h2.config.MyWebSocketHandler' that could not be found.
 
 
 Action:
 
-Consider defining a bean named 'myFactory' in your configuration.
+Consider defining a bean of type 'com.bezkoder.spring.jpa.h2.config.MyWebSocketHandler' in your configuration.
 
+2024-01-26T09:27:05.840+01:00  WARN 22156 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T09:33:25.628+01:00  WARN 22156 --- [Thread-0 (ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl$6@5128488d)] o.apache.activemq.artemis.core.server    : AMQ222225: Sending unexpected exception to the client
+
+java.lang.NoSuchMethodError: 'void org.apache.activemq.artemis.utils.collections.UpdatableIterator.removed(java.lang.Object)'
+	at org.apache.activemq.artemis.core.server.impl.QueueConsumersImpl.remove(QueueConsumersImpl.java:98) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.QueueImpl.removeConsumer(QueueImpl.java:1521) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.removeItself(ServerConsumerImpl.java:658) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.close(ServerConsumerImpl.java:589) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerSessionImpl.closeConsumer(ServerSessionImpl.java:1742) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.slowPacketHandler(ServerSessionPacketHandler.java:623) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.onMessagePacket(ServerSessionPacketHandler.java:315) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.utils.actors.Actor.doTask(Actor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:57) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run(ActiveMQThreadFactory.java:118) ~[artemis-commons-2.28.0.jar:na]
+
+2024-01-26T09:33:25.864+01:00  WARN 22156 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
+2024-01-26T09:33:49.779+01:00  WARN 8004 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T09:43:16.857+01:00  WARN 8004 --- [Thread-1 (ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl$6@3b962936)] o.apache.activemq.artemis.core.server    : AMQ222225: Sending unexpected exception to the client
+
+java.lang.NoSuchMethodError: 'void org.apache.activemq.artemis.utils.collections.UpdatableIterator.removed(java.lang.Object)'
+	at org.apache.activemq.artemis.core.server.impl.QueueConsumersImpl.remove(QueueConsumersImpl.java:98) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.QueueImpl.removeConsumer(QueueImpl.java:1521) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.removeItself(ServerConsumerImpl.java:658) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.close(ServerConsumerImpl.java:589) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerSessionImpl.closeConsumer(ServerSessionImpl.java:1742) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.slowPacketHandler(ServerSessionPacketHandler.java:623) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.onMessagePacket(ServerSessionPacketHandler.java:315) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.utils.actors.Actor.doTask(Actor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:57) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run(ActiveMQThreadFactory.java:118) ~[artemis-commons-2.28.0.jar:na]
+
+2024-01-26T09:43:17.091+01:00  WARN 8004 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
+2024-01-26T09:43:23.977+01:00  WARN 15388 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T09:44:49.907+01:00  WARN 15388 --- [Thread-0 (ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl$6@327c67eb)] o.apache.activemq.artemis.core.server    : AMQ222225: Sending unexpected exception to the client
+
+java.lang.NoSuchMethodError: 'void org.apache.activemq.artemis.utils.collections.UpdatableIterator.removed(java.lang.Object)'
+	at org.apache.activemq.artemis.core.server.impl.QueueConsumersImpl.remove(QueueConsumersImpl.java:98) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.QueueImpl.removeConsumer(QueueImpl.java:1521) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.removeItself(ServerConsumerImpl.java:658) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.close(ServerConsumerImpl.java:589) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerSessionImpl.closeConsumer(ServerSessionImpl.java:1742) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.slowPacketHandler(ServerSessionPacketHandler.java:623) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.onMessagePacket(ServerSessionPacketHandler.java:315) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.utils.actors.Actor.doTask(Actor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:57) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run(ActiveMQThreadFactory.java:118) ~[artemis-commons-2.28.0.jar:na]
+
+2024-01-26T09:44:50.133+01:00  WARN 15388 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
+2024-01-26T09:44:56.854+01:00  WARN 4312 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T09:46:21.587+01:00  WARN 24300 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T09:49:48.233+01:00  WARN 24300 --- [Thread-1 (ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl$6@67e21a0c)] o.apache.activemq.artemis.core.server    : AMQ222225: Sending unexpected exception to the client
+
+java.lang.NoSuchMethodError: 'void org.apache.activemq.artemis.utils.collections.UpdatableIterator.removed(java.lang.Object)'
+	at org.apache.activemq.artemis.core.server.impl.QueueConsumersImpl.remove(QueueConsumersImpl.java:98) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.QueueImpl.removeConsumer(QueueImpl.java:1521) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.removeItself(ServerConsumerImpl.java:658) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.close(ServerConsumerImpl.java:589) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerSessionImpl.closeConsumer(ServerSessionImpl.java:1742) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.slowPacketHandler(ServerSessionPacketHandler.java:623) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.onMessagePacket(ServerSessionPacketHandler.java:315) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.utils.actors.Actor.doTask(Actor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:57) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run(ActiveMQThreadFactory.java:118) ~[artemis-commons-2.28.0.jar:na]
+
+2024-01-26T09:49:48.462+01:00  WARN 24300 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
+2024-01-26T09:53:06.215+01:00  WARN 23588 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T09:54:51.118+01:00  WARN 23588 --- [Thread-1 (ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl$6@15c3e989)] o.apache.activemq.artemis.core.server    : AMQ222225: Sending unexpected exception to the client
+
+java.lang.NoSuchMethodError: 'void org.apache.activemq.artemis.utils.collections.UpdatableIterator.removed(java.lang.Object)'
+	at org.apache.activemq.artemis.core.server.impl.QueueConsumersImpl.remove(QueueConsumersImpl.java:98) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.QueueImpl.removeConsumer(QueueImpl.java:1521) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.removeItself(ServerConsumerImpl.java:658) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.close(ServerConsumerImpl.java:589) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerSessionImpl.closeConsumer(ServerSessionImpl.java:1742) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.slowPacketHandler(ServerSessionPacketHandler.java:623) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.onMessagePacket(ServerSessionPacketHandler.java:315) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.utils.actors.Actor.doTask(Actor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:57) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run(ActiveMQThreadFactory.java:118) ~[artemis-commons-2.28.0.jar:na]
+
+2024-01-26T09:54:51.356+01:00  WARN 23588 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
+2024-01-26T09:54:59.176+01:00  WARN 23628 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T10:00:18.278+01:00  WARN 23628 --- [Thread-1 (ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl$6@62c0a1a3)] o.apache.activemq.artemis.core.server    : AMQ222225: Sending unexpected exception to the client
+
+java.lang.NoSuchMethodError: 'void org.apache.activemq.artemis.utils.collections.UpdatableIterator.removed(java.lang.Object)'
+	at org.apache.activemq.artemis.core.server.impl.QueueConsumersImpl.remove(QueueConsumersImpl.java:98) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.QueueImpl.removeConsumer(QueueImpl.java:1521) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.removeItself(ServerConsumerImpl.java:658) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.close(ServerConsumerImpl.java:589) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerSessionImpl.closeConsumer(ServerSessionImpl.java:1742) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.slowPacketHandler(ServerSessionPacketHandler.java:623) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.onMessagePacket(ServerSessionPacketHandler.java:315) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.utils.actors.Actor.doTask(Actor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:57) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run(ActiveMQThreadFactory.java:118) ~[artemis-commons-2.28.0.jar:na]
+
+2024-01-26T10:00:18.516+01:00  WARN 23628 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
+2024-01-26T10:00:26.380+01:00  WARN 12548 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-26T10:04:56.202+01:00  WARN 12548 --- [Thread-2 (ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl$6@15c3e989)] o.apache.activemq.artemis.core.server    : AMQ222225: Sending unexpected exception to the client
+
+java.lang.NoSuchMethodError: 'void org.apache.activemq.artemis.utils.collections.UpdatableIterator.removed(java.lang.Object)'
+	at org.apache.activemq.artemis.core.server.impl.QueueConsumersImpl.remove(QueueConsumersImpl.java:98) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.QueueImpl.removeConsumer(QueueImpl.java:1521) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.removeItself(ServerConsumerImpl.java:658) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerConsumerImpl.close(ServerConsumerImpl.java:589) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.server.impl.ServerSessionImpl.closeConsumer(ServerSessionImpl.java:1742) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.slowPacketHandler(ServerSessionPacketHandler.java:623) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.core.protocol.core.ServerSessionPacketHandler.onMessagePacket(ServerSessionPacketHandler.java:315) ~[artemis-server-2.31.2.jar:2.31.2]
+	at org.apache.activemq.artemis.utils.actors.Actor.doTask(Actor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:57) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.OrderedExecutor.doTask(OrderedExecutor.java:32) ~[artemis-commons-2.28.0.jar:na]
+	at org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTasks(ProcessorBase.java:68) ~[artemis-commons-2.28.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run(ActiveMQThreadFactory.java:118) ~[artemis-commons-2.28.0.jar:na]
+
+2024-01-26T10:04:56.437+01:00  WARN 12548 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: La base de données est déjà fermée (pour désactiver la fermeture automatique à l'arrêt de la VM, ajoutez "; DB_CLOSE_ON_EXIT = FALSE" à l'URL db)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]

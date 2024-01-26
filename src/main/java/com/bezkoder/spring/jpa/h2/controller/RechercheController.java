@@ -2,6 +2,7 @@ package com.bezkoder.spring.jpa.h2.controller;
 
 import com.bezkoder.spring.jpa.h2.business.Transaction;
 import com.bezkoder.spring.jpa.h2.repository.TransactionRepository;
+import com.bezkoder.spring.jpa.h2.service.JmsMessageSender;
 import com.bezkoder.spring.jpa.h2.service.PdfGenerateurService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,11 @@ import java.util.stream.Collectors;
 public class RechercheController {
     private final TransactionRepository transactionRepository;
     private final PdfGenerateurService pdfGenerateurService;
+    private final JmsMessageSender jmsMessageSender;
     private static final double EARTH_RADIUS = 6371e3; // en mètres
 
     @GetMapping ("/transactions")
-    public ResponseEntity<byte[]> rechercher(
+    public ResponseEntity<String> rechercher(
             @RequestParam(name = "latitude") double latitude,
             @RequestParam(name = "longitude") double longitude,
             @RequestParam(name = "rayon") double rayon ) throws IOException {
@@ -34,15 +36,12 @@ public class RechercheController {
         System.out.println("Latitude : " + latitude);
         System.out.println("Longitude : " + longitude);
         System.out.println("Rayon : " + rayon);
-
-        byte[] pdfBytes = pdfGenerateurService.pdfGenerate(latitude, longitude, rayon);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=rapport.pdf");
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentLength(pdfBytes.length)
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(pdfBytes);
+        String fileName = "rapport_" + System.currentTimeMillis() + ".pdf";
+        String path = "src/main/resources/" + fileName;
+        String message = "Générer PDF pour Latitude : " + latitude + ", Longitude : " + longitude + ", Rayon : " + rayon + ", path : " + path;
+        System.out.println(message);
+        jmsMessageSender.send("pdfQueue", message);
+        return ResponseEntity.ok("Recherche en cours, veuillez attendre la notification.");
     }
 
     private List<Map<String, Double>> calculerTransactions(double latitude, double longitude, double rayon) {
