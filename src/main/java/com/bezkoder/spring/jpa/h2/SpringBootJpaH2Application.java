@@ -17,7 +17,6 @@ import org.springframework.jms.support.converter.MappingJackson2MessageConverter
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import java.io.FileNotFoundException;
 
 @SpringBootApplication
 @EnableScheduling
@@ -49,7 +48,7 @@ public class SpringBootJpaH2Application {
 	}
 
 	@EventListener(ApplicationReadyEvent.class)
-	public void runAfterStartup() throws FileNotFoundException {
+	public void runAfterStartup(){
 		System.out.println("Application started ... launching importation");
 	}
 }

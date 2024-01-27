@@ -48,6 +48,7 @@ public class PdfGenerateurService {
         List<Transaction> transactions = transactionRepository.findAll();
         System.out.println("Nombre de transactions récupérées : " + transactions.size());
         List<Transaction> transactionsDansRayon = transactions.stream()
+                .filter(t -> t.getLatitude() != null && t.getLongitude() != null)
                 .filter(t -> calculerDistance(latitude, longitude, t.getLatitude(), t.getLongitude()) <= rayon)
                 .collect(Collectors.toList());
         System.out.println("Nombre de transactions dans le rayon : " + transactionsDansRayon.size());
@@ -92,24 +93,6 @@ public class PdfGenerateurService {
         System.out.println("PDF généré : " + pdfBytes);
         return pdfBytes;
     }
-
-//    public String pdfGenerate(double latitude, double longitude, double rayon) throws IOException {
-//        String fileName = "rapport_" + System.currentTimeMillis() + ".pdf";
-//        String path = "src/main/resources/" + fileName;
-//
-//        PdfWriter writer = new PdfWriter(path);
-//        PdfDocument pdf = new PdfDocument(writer);
-//        Document document = new Document(pdf);
-//
-//        // Exemple de contenu - ajouter le contenu réel du PDF ici
-//        document.add(new Paragraph("Rapport des Transactions"));
-//        document.add(new Paragraph("Latitude: " + latitude));
-//        document.add(new Paragraph("Longitude: " + longitude));
-//        document.add(new Paragraph("Rayon: " + rayon));
-//
-//        document.close();
-//        return path;
-//    }
     public void sendPdfToQueue() {
         System.out.println("Envoi du pdf dans la queue");
         jmsMessageSender.send("pdfQueue", "pdf");
@@ -123,7 +106,6 @@ public class PdfGenerateurService {
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                 Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        System.out.println("Distance : " + EARTH_RADIUS * c);
         return EARTH_RADIUS * c; // Distance en mètres
     }
 }
