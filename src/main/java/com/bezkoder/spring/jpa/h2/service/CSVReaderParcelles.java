@@ -37,15 +37,16 @@ public class CSVReaderParcelles {
 
                 while ((record = csvReader.readNext()) != null) {
 
-                    System.out.println(
-                            String.format(
-                                    "Line %d Col1: %s Col2: %s Col3: %s",
-                                    currentLine,
-                                    record[0],
-                                    record[1],
-                                    record[2]
-                            )
-                    );
+//                    System.out.println(
+//                            String.format(
+//                                    "Line %d Col1: %s Col2: %s Col3: %s",
+//                                    currentLine,
+//                                    record[0],
+//                                    record[1],
+//                                    record[2]
+//                            )
+//                    );
+
 
                     currentLine++;
                 }
