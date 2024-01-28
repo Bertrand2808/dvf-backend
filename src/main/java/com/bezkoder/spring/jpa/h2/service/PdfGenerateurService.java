@@ -2,6 +2,7 @@ package com.bezkoder.spring.jpa.h2.service;
 
 
 import com.bezkoder.spring.jpa.h2.business.Transaction;
+import com.bezkoder.spring.jpa.h2.controller.RechercheController;
 import com.bezkoder.spring.jpa.h2.repository.TransactionRepository;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -13,29 +14,20 @@ import org.springframework.stereotype.Service;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class PdfGenerateurService {
+    private final Logger logger = Logger.getLogger(PdfGenerateurService.class.getName());
     private static final double EARTH_RADIUS = 6371e3; // en mètres
     private final TransactionRepository transactionRepository;
-    private final JmsMessageSender jmsMessageSender;
-
-    public void genererRapportTransactions() throws FileNotFoundException {
-        String path = "E:/Documents_HDD/ssd/Cours_ESGI/M1/ArchitectureLogicielle/rapport.pdf";
-        PdfWriter writer = new PdfWriter(path);
-        PdfDocument pdf = new PdfDocument(writer);
-        Document document = new Document(pdf);
-        List<Transaction> transactions = transactionRepository.findAll();
-        for (Transaction transaction : transactions) {
-            document.add(new Paragraph("ID Mutation: " + transaction.getIdMutation()));
-            document.add(new Paragraph("--------------------------------------"));
-        }
-        document.close();
-    }
 
     public byte[] pdfGenerate(String path, double latitude, double longitude, double rayon) throws IOException {
         PdfWriter writer = new PdfWriter(path);
@@ -46,13 +38,17 @@ public class PdfGenerateurService {
         document.add(new Paragraph("Longitude saisie : " + longitude));
         document.add(new Paragraph("--------------------------------------"));
         List<Transaction> transactions = transactionRepository.findAll();
-        System.out.println("Nombre de transactions récupérées : " + transactions.size());
+        if(logger.isLoggable(Level.INFO)) {
+            logger.info(MessageFormat.format("Nombre de transactions trouvées : {0}", transactions.size()));
+        }
         List<Transaction> transactionsDansRayon = transactions.stream()
                 .filter(t -> t.getLatitude() != null && t.getLongitude() != null)
                 .filter(t -> calculerDistance(latitude, longitude, t.getLatitude(), t.getLongitude()) <= rayon)
-                .collect(Collectors.toList());
-        System.out.println("Nombre de transactions dans le rayon : " + transactionsDansRayon.size());
-        if (transactionsDansRayon.size() == 0) {
+                .toList();
+        if(logger.isLoggable(Level.INFO)) {
+            logger.info(MessageFormat.format("Nombre de transactions trouvées dans le rayon de {0} mètres : {1}", rayon, transactionsDansRayon.size()));
+        }
+        if (transactionsDansRayon.isEmpty()) {
             document.add(new Paragraph("Aucune transaction trouvée dans le rayon de " + rayon + " mètres autour de la position saisie."));
         } else {
             for (Transaction transaction : transactionsDansRayon) {
@@ -88,14 +84,11 @@ public class PdfGenerateurService {
             }
         }
         document.close();
-        byte[] pdfBytes = Files.readAllBytes(Paths.get(path));
-        Files.delete(Paths.get(path));
-        System.out.println("PDF généré : " + pdfBytes);
+        Path pdfPath = Paths.get(path);
+        byte[] pdfBytes = Files.readAllBytes(pdfPath);
+        Files.delete(pdfPath);
+        logger.info("PDF généré et supprimé du disque.");
         return pdfBytes;
-    }
-    public void sendPdfToQueue() {
-        System.out.println("Envoi du pdf dans la queue");
-        jmsMessageSender.send("pdfQueue", "pdf");
     }
     private double calculerDistance(double lat1, double lon1, double lat2, double lon2) {
         double dLat = Math.toRadians(lat2 - lat1);

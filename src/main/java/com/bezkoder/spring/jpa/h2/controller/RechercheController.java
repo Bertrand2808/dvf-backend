@@ -1,79 +1,44 @@
 package com.bezkoder.spring.jpa.h2.controller;
 
-import com.bezkoder.spring.jpa.h2.business.Transaction;
-import com.bezkoder.spring.jpa.h2.repository.TransactionRepository;
+import com.bezkoder.spring.jpa.h2.exception.ParametresManquantsException;
 import com.bezkoder.spring.jpa.h2.service.JmsMessageSender;
-import com.bezkoder.spring.jpa.h2.service.PdfGenerateurService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.text.MessageFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api")
 public class RechercheController {
-    private final TransactionRepository transactionRepository;
-    private final PdfGenerateurService pdfGenerateurService;
+    private final Logger logger = Logger.getLogger(RechercheController.class.getName());
     private final JmsMessageSender jmsMessageSender;
-    private static final double EARTH_RADIUS = 6371e3; // en mètres
-
+    /**
+     * GET /transactions : get transactions depending on the given latitude, longitude and radius.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of transactions in body
+     */
     @GetMapping ("/transactions")
-    public ResponseEntity<String> rechercher(
-            @RequestParam(name = "latitude") double latitude,
-            @RequestParam(name = "longitude") double longitude,
-            @RequestParam(name = "rayon") double rayon ) throws IOException {
-
-        System.out.println("Latitude : " + latitude);
-        System.out.println("Longitude : " + longitude);
-        System.out.println("Rayon : " + rayon);
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> rechercherTransaction(
+            @RequestParam(name = "latitude") Double latitude,
+            @RequestParam(name = "longitude") Double longitude,
+            @RequestParam(name = "rayon") Double rayon ) {
+        if (latitude == null || longitude == null || rayon == null) {
+            throw new ParametresManquantsException("Les paramètres latitude, longitude et rayon sont obligatoires.");
+        }
+        if (logger.isLoggable(Level.INFO)) {
+            logger.info(MessageFormat.format("Recherche de transactions avec latitude : {0}, longitude : {1}, rayon : {2}", latitude, longitude, rayon));
+        }
         String fileName = "rapport_" + System.currentTimeMillis() + ".pdf";
         String path = "src/main/resources/" + fileName;
         String message = "Générer PDF pour Latitude : " + latitude + ", Longitude : " + longitude + ", Rayon : " + rayon + ", path : " + path;
-        System.out.println(message);
         jmsMessageSender.send("pdfQueue", message);
         return ResponseEntity.ok("Recherche en cours, veuillez attendre la notification.");
-    }
-
-    private List<Map<String, Double>> calculerTransactions(double latitude, double longitude, double rayon) {
-        List<Map<String, Double>> points = new ArrayList<>();
-        double latRadians = Math.toRadians(latitude);
-        double lonRadians = Math.toRadians(longitude);
-
-        // Calculer les points sur un cercle autour du rayon donné
-        for (int angle = 0; angle < 360; angle++) {
-            double angleRadians = Math.toRadians(angle);
-            double latPoint = Math.asin(Math.sin(latRadians) * Math.cos(rayon / EARTH_RADIUS) +
-                    Math.cos(latRadians) * Math.sin(rayon / EARTH_RADIUS) * Math.cos(angleRadians));
-            double lonPoint = lonRadians + Math.atan2(Math.sin(angleRadians) * Math.sin(rayon / EARTH_RADIUS) * Math.cos(latRadians),
-                    Math.cos(rayon / EARTH_RADIUS) - Math.sin(latRadians) * Math.sin(latPoint));
-            latPoint = Math.toDegrees(latPoint);
-            lonPoint = Math.toDegrees(lonPoint);
-
-            points.add(Map.of("latitude", latPoint, "longitude", lonPoint));
-        }
-        return points;
-    }
-
-    private double calculerDistance(double lat1, double lon1, double lat2, double lon2) {
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        lat1 = Math.toRadians(lat1);
-        lat2 = Math.toRadians(lat2);
-
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        System.out.println("Distance : " + EARTH_RADIUS * c);
-        return EARTH_RADIUS * c; // Distance en mètres
     }
 }

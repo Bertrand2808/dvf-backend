@@ -1,5 +1,7 @@
 package com.bezkoder.spring.jpa.h2.config;
 
+import com.bezkoder.spring.jpa.h2.exception.WebSocketNotificationException;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -12,6 +14,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 public class MyWebSocketHandler extends TextWebSocketHandler {
 
+    @Getter
     private static final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
     @Override
@@ -26,11 +29,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
-        // Gérer les messages entrants si nécessaire
-    }
-
-    public static List<WebSocketSession> getSessions() {
-        return sessions;
+        // TODO document why this method is empty
     }
 
     public void sendPdfGeneratedNotification(String base64Pdf) {
@@ -40,7 +39,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
                     session.sendMessage(new TextMessage(base64Pdf));
                 } catch (IOException e) {
                     e.printStackTrace();
-                    // Gérer l'exception
+                    throw new WebSocketNotificationException("Erreur lors de l'envoi de la notification WebSocket.", e);
                 }
             }
         }

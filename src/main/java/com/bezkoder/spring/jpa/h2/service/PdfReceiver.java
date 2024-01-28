@@ -1,58 +1,65 @@
 package com.bezkoder.spring.jpa.h2.service;
 
 import com.bezkoder.spring.jpa.h2.config.MyWebSocketHandler;
-import com.bezkoder.spring.jpa.h2.dto.RechercherDTO;
-import lombok.AllArgsConstructor;
+import com.bezkoder.spring.jpa.h2.exception.PdfGenerationException;
+import com.bezkoder.spring.jpa.h2.exception.ValueExtractionException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class PdfReceiver {
-
+    private final Logger logger = Logger.getLogger(PdfReceiver.class.getName());
     private final PdfGenerateurService pdfGenerateurService;
     private final MyWebSocketHandler myWebSocketHandler;
-
     @Autowired
     public PdfReceiver(PdfGenerateurService pdfGenerateurService, MyWebSocketHandler myWebSocketHandler) {
         this.pdfGenerateurService = pdfGenerateurService;
         this.myWebSocketHandler = myWebSocketHandler;
     }
+    /**
+     * Méthode pour recevoir les messages de la file pdfQueue
+     * @param message
+     * @throws IOException
+     */
     @JmsListener(destination = "pdfQueue", containerFactory = "myFactory")
     public void receivePdf(String message) throws IOException {
-        ResponseEntity<byte[]> responseEntity = null;
-        System.out.println("Received <" + message + ">");
+        if(logger.isLoggable(Level.INFO)) {
+            logger.info("Received <" + message + ">");
+        }
         double latitude = extractValue(message, "Latitude");
         double longitude = extractValue(message, "Longitude");
         double rayon = extractValue(message, "Rayon");
-        System.out.println("attributs : " + latitude + ", " + longitude + ", " + rayon);
+        if(logger.isLoggable(Level.INFO)) {
+            logger.info("Latitude : " + latitude);
+            logger.info("Longitude : " + longitude);
+            logger.info("Rayon : " + rayon);
+        }
         String fileName = "rapport_" + System.currentTimeMillis() + ".pdf";
         String path = "src/main/resources/" + fileName;
         try {
             byte [] pdfBytes = pdfGenerateurService.pdfGenerate(path, latitude, longitude, rayon);
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=rapport.pdf");
-            responseEntity = ResponseEntity.ok()
-                    .headers(headers)
-                    .contentLength(pdfBytes.length)
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .body(pdfBytes);
             String base64Pdf = Base64.getEncoder().encodeToString(pdfBytes);
             myWebSocketHandler.sendPdfGeneratedNotification(base64Pdf);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new PdfGenerationException("Erreur lors de la génération du PDF.", e);
         }
     }
 
-    // Méthode pour extraire les valeurs de latitude, longitude ou rayon de la chaîne message
+    /**
+     * Méthode pour extraire la valeur d'un attribut dans un message
+     * @param message
+     * @param key
+     * @return
+     */
     private double extractValue(String message, String key) {
         String startTag = key + " : ";
         int startIndex = message.indexOf(startTag);
@@ -63,12 +70,11 @@ public class PdfReceiver {
                 try {
                     return Double.parseDouble(valueStr);
                 } catch (NumberFormatException e) {
-                    // Gérer l'exception en cas d'erreur de conversion
-                    e.printStackTrace();
+                    throw new ValueExtractionException("Erreur lors de l'extraction de la valeur.", e);
                 }
             }
         }
-        return 0.0; // Valeur par défaut si la valeur n'est pas trouvée
+        return 0.0;
     }
 
 
