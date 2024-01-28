@@ -18,15 +18,18 @@ import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.util.logging.Logger;
+
 @SpringBootApplication
 @EnableScheduling
 @AllArgsConstructor
 @EnableJms
-public class SpringBootJpaH2Application {
+public class DvfApplication {
 	final ImportationService importationService;
 
+	private final Logger logger = Logger.getLogger(DvfApplication.class.getName());
 	@Bean
-	public JmsListenerContainerFactory<?> myFactory(ConnectionFactory connectionFactory,
+	public JmsListenerContainerFactory myFactory(ConnectionFactory connectionFactory,
 													DefaultJmsListenerContainerFactoryConfigurer configurer) {
 		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
 		configurer.configure(factory, connectionFactory);
@@ -42,13 +45,14 @@ public class SpringBootJpaH2Application {
 	}
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(SpringBootJpaH2Application.class, args);
+		ConfigurableApplicationContext context = SpringApplication.run(DvfApplication.class, args);
 		JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
-		System.out.println("test");
 	}
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void runAfterStartup(){
-		System.out.println("Application started ... launching importation");
+		if(logger.isLoggable(java.util.logging.Level.INFO)) {
+			logger.info("Démarrage de l'application, importation des données en cours...");
+		}
 	}
 }
