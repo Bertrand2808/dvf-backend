@@ -44,3 +44,11 @@ Une fois l'application lancée, il faut se rendre à l'adresse suivante pour con
 A noter qu'il est préférable de lancer le back avant le front. 
 
 Pour lancer le front, rendez vous ici : https://github.com/Bertrand2808/DVF-front et suivre les instructions du README.md.
+
+## Swagger 
+
+Pour consulter la documentation de l'API, rendez-vous à l'adresse suivante : http://localhost:8080/swagger-ui.html
+![img_3.png](img_3.png)
+
+Pour consulter les données, il suffit de cliquer sur le controller, remplir les champs comme suit : 
+![img_4.png](img_4.png)
