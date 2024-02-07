@@ -10,7 +10,7 @@ public class WebConfig  implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Autorise les requêtes cross-origin pour toutes les routes
                 .allowedOrigins("http://localhost:5173/*") // URL du front-end React
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedMethods("GET")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }

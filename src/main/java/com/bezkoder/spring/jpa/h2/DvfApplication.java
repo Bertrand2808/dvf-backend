@@ -29,12 +29,13 @@ public class DvfApplication {
 
 	private final Logger logger = Logger.getLogger(DvfApplication.class.getName());
 	@Bean
-	public JmsListenerContainerFactory myFactory(ConnectionFactory connectionFactory,
-													DefaultJmsListenerContainerFactoryConfigurer configurer) {
+	public DefaultJmsListenerContainerFactory myFactory(ConnectionFactory connectionFactory,
+														DefaultJmsListenerContainerFactoryConfigurer configurer) {
 		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
 		configurer.configure(factory, connectionFactory);
 		return factory;
 	}
+
 
 	@Bean
 	public MessageConverter jacksonJmsMessageConverter() {
@@ -45,8 +46,7 @@ public class DvfApplication {
 	}
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(DvfApplication.class, args);
-		JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
+		SpringApplication.run(DvfApplication.class, args);
 	}
 
 	@EventListener(ApplicationReadyEvent.class)
