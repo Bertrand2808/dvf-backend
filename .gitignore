@@ -38,3 +38,5 @@ src/main/resources/parcelles.csv
 ### database ###
 testdb.mv.db
 testdb.trace.db
+
+/doc/full.csv

@@ -43,15 +43,10 @@ public class PdfReceiver {
         }
         String fileName = "rapport_" + System.currentTimeMillis() + ".pdf";
         String path = "src/main/resources/" + fileName;
-        try {
-            byte [] pdfBytes = pdfGenerateurService.pdfGenerate(path, latitude, longitude, rayon);
-            HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=rapport.pdf");
+        pdfGenerateurService.enqueuePdfGeneration(path, latitude, longitude, rayon, (pdfBytes) -> {
             String base64Pdf = Base64.getEncoder().encodeToString(pdfBytes);
             myWebSocketHandler.sendPdfGeneratedNotification(base64Pdf);
-        } catch (IOException e) {
-            throw new PdfGenerationException("Erreur lors de la génération du PDF.", e);
-        }
+        });
     }
 
     /**

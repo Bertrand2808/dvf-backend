@@ -10,12 +10,16 @@ import com.itextpdf.layout.element.Paragraph;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,11 +29,55 @@ public class PdfGenerateurService {
     private final Logger logger = Logger.getLogger(PdfGenerateurService.class.getName());
     private static final double EARTH_RADIUS = 6371e3; // en mètres
     private final TransactionRepository transactionRepository;
+    private final Queue<Runnable> tasks = new LinkedList<>();
+    private final Object lock = new Object();
 
-    public byte[] pdfGenerate(String path, double latitude, double longitude, double rayon) throws IOException {
-        PdfDocument pdf = createPdfDocument(path);
-        Document document = createDocument(pdf, latitude, longitude, rayon);
+    public void enqueuePdfGeneration(String path, double latitude, double longitude, double rayon, Consumer<byte[]> onPdfGenerated) {
+        Runnable task = () -> {
+            try {
+                byte[] pdfBytes = pdfGenerate(path, latitude, longitude, rayon);
+                onPdfGenerated.accept(pdfBytes);
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Erreur lors de la génération du PDF", e);
+            }
+        };
+        synchronized (lock) {
+            boolean wasEmpty = tasks.isEmpty();
+            tasks.offer(task);
+            if (wasEmpty) {
+                logger.info("Nouvelle demande de génération de PDF reçue, traitement en cours...");
+                processQueue(); // Appel pour traiter la tâche immédiatement si la file était vide
+            } else {
+                logger.info("Demande de génération de PDF mise en file d'attente.");
+            }
+        }
+    }
 
+    private void processQueue() {
+        new Thread(() -> {
+            Runnable task;
+            while (true) {
+                synchronized (lock) {
+                    task = tasks.poll();
+                    if (task == null) {
+                        break;
+                    }
+                }
+                task.run(); // Exécute la tâche en dehors du bloc synchronized pour permettre à d'autres tâches d'être enfilées
+            }
+        }).start();
+    }
+
+    private byte[] pdfGenerate(String path, double latitude, double longitude, double rayon) throws IOException {
+//        PdfDocument pdf = createPdfDocument(path);
+//        Document document = createDocument(pdf, latitude, longitude, rayon);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        PdfWriter writer = new PdfWriter(byteArrayOutputStream);
+
+        // Création de l'objet PdfDocument
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+        document = createDocument(pdf, latitude, longitude, rayon);
         List<Transaction> transactionsDansRayon = getTransactionsInRadius(latitude, longitude, rayon);
 
         if (transactionsDansRayon.isEmpty()) {
@@ -37,11 +85,11 @@ public class PdfGenerateurService {
         } else {
             addTransactionsToDocument(document, transactionsDansRayon);
         }
-
-        byte[] pdfBytes = closeAndReadPdf(pdf, path);
+        document.close();
+//        byte[] pdfBytes = closeAndReadPdf(pdf, path);
 
         logger.info("PDF généré et supprimé du disque.");
-        return pdfBytes;
+        return byteArrayOutputStream.toByteArray();
     }
 
     private PdfDocument createPdfDocument(String path) throws IOException {
