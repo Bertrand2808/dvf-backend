@@ -2,6 +2,10 @@ package com.bezkoder.spring.jpa.h2.controller;
 
 import com.bezkoder.spring.jpa.h2.exception.ParametresManquantsException;
 import com.bezkoder.spring.jpa.h2.service.JmsMessageSender;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +22,21 @@ import java.util.logging.Logger;
 public class RechercheController {
     private final Logger logger = Logger.getLogger(RechercheController.class.getName());
     private final JmsMessageSender jmsMessageSender;
+
     /**
      * GET /transactions : get transactions depending on the given latitude, longitude and radius.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of transactions in body
      */
+    @Operation(summary = "Retrieve transactions based on latitude, longitude, and radius", tags = { "transactions"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Transactions found", content = {
+                    @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = {
+                    @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {
+                    @Content(mediaType = "application/json") })
+    })
     @GetMapping ("/transactions")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> rechercherTransaction(

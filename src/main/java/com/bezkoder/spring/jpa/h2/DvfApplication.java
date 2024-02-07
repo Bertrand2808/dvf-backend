@@ -29,12 +29,13 @@ public class DvfApplication {
 
 	private final Logger logger = Logger.getLogger(DvfApplication.class.getName());
 	@Bean
-	public JmsListenerContainerFactory myFactory(ConnectionFactory connectionFactory,
-													DefaultJmsListenerContainerFactoryConfigurer configurer) {
+	public DefaultJmsListenerContainerFactory myFactory(ConnectionFactory connectionFactory,
+														DefaultJmsListenerContainerFactoryConfigurer configurer) {
 		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
 		configurer.configure(factory, connectionFactory);
 		return factory;
 	}
+
 
 	@Bean
 	public MessageConverter jacksonJmsMessageConverter() {

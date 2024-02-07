@@ -74,36 +74,40 @@ public class PdfGenerateurService {
             document.add(new Paragraph("Aucune transaction trouvée dans le rayon autour de la position saisie."));
         } else {
             for (Transaction transaction : transactionsDansRayon) {
-                document.add(new Paragraph("ID Mutation: " + transaction.getIdMutation()));
-                if (transaction.getDateMutation() != null) {
-                    document.add(new Paragraph("Date de mutation : " + transaction.getDateMutation()));
-                }
-                if (transaction.getNatureMutation() != null) {
-                    document.add(new Paragraph("Nature de la mutation : " + transaction.getNatureMutation()));
-                }
-                if (transaction.getAdresseNomVoie() != null) {
-                    document.add(new Paragraph("Adresse : " + transaction.getAdresseNomVoie()));
-                }
-                if (transaction.getCodePostal() != null) {
-                    document.add(new Paragraph("Code Postal : " + transaction.getCodePostal()));
-                }
-                if (transaction.getNomCommune() != null) {
-                    document.add(new Paragraph("Nom de la commune : " + transaction.getNomCommune()));
-                }
-                if (transaction.getNombrePiecesPrincipales() != null && transaction.getNombrePiecesPrincipales() != 0) {
-                    document.add(new Paragraph("Nombre de pièces principales : " + transaction.getNombrePiecesPrincipales()));
-                }
-                if (transaction.getSurfaceTerrain() != null) {
-                    document.add(new Paragraph("Surface du terrain : " + transaction.getSurfaceTerrain()));
-                }
-                if (transaction.getLatitude() != null && transaction.getLongitude() != null) {
-                    document.add(new Paragraph("Latitude : " + transaction.getLatitude() + " / Longitude : " + transaction.getLongitude()));
-                }
-                if (transaction.getValeurFonciere() != null) {
-                    document.add(new Paragraph("Valeur Foncière : " + transaction.getValeurFonciere()));
-                }
+                addTransactionDetails(document, transaction);
                 document.add(new Paragraph("--------------------------------------"));
             }
+        }
+    }
+
+    private void addTransactionDetails(Document document, Transaction transaction) {
+        document.add(new Paragraph("ID Mutation: " + transaction.getIdMutation()));
+        if (transaction.getDateMutation() != null) {
+            document.add(new Paragraph("Date de mutation : " + transaction.getDateMutation()));
+        }
+        if (transaction.getNatureMutation() != null) {
+            document.add(new Paragraph("Nature de la mutation : " + transaction.getNatureMutation()));
+        }
+        if (transaction.getAdresseNomVoie() != null) {
+            document.add(new Paragraph("Adresse : " + transaction.getAdresseNomVoie()));
+        }
+        if (transaction.getCodePostal() != null) {
+            document.add(new Paragraph("Code Postal : " + transaction.getCodePostal()));
+        }
+        if (transaction.getNomCommune() != null) {
+            document.add(new Paragraph("Nom de la commune : " + transaction.getNomCommune()));
+        }
+        if (transaction.getNombrePiecesPrincipales() != null && transaction.getNombrePiecesPrincipales() != 0) {
+            document.add(new Paragraph("Nombre de pièces principales : " + transaction.getNombrePiecesPrincipales()));
+        }
+        if (transaction.getSurfaceTerrain() != null) {
+            document.add(new Paragraph("Surface du terrain : " + transaction.getSurfaceTerrain()));
+        }
+        if (transaction.getLatitude() != null && transaction.getLongitude() != null) {
+            document.add(new Paragraph("Latitude : " + transaction.getLatitude() + " / Longitude : " + transaction.getLongitude()));
+        }
+        if (transaction.getValeurFonciere() != null) {
+            document.add(new Paragraph("Valeur Foncière : " + transaction.getValeurFonciere()));
         }
     }
 
