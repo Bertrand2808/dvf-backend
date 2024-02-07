@@ -28,4 +28,8 @@ Une fois l'application lancée, il faut se rendre à l'adresse suivante pour con
 ![img_2.png](img_2.png)
 
 
+### Utilisation avec le front 
 
+A noter qu'il est préférable de lancer le back avant le front. 
+
+Pour lancer le front, rendez vous ici : https://github.com/Bertrand2808/DVF-front et suivre les instructions du README.md.

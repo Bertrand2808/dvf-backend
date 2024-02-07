@@ -45,8 +45,7 @@ public class DvfApplication {
 	}
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(DvfApplication.class, args);
-		JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
+		SpringApplication.run(DvfApplication.class, args);
 	}
 
 	@EventListener(ApplicationReadyEvent.class)
