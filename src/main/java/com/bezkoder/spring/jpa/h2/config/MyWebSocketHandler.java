@@ -29,7 +29,8 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
-        // TODO document why this method is empty
+        // This method is intentionally left empty.
+        // In this application, we do not need to handle incoming WebSocket messages.
     }
 
     public void sendPdfGeneratedNotification(String base64Pdf) {

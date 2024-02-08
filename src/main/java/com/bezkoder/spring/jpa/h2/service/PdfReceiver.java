@@ -1,15 +1,10 @@
 package com.bezkoder.spring.jpa.h2.service;
 
 import com.bezkoder.spring.jpa.h2.config.MyWebSocketHandler;
-import com.bezkoder.spring.jpa.h2.exception.PdfGenerationException;
 import com.bezkoder.spring.jpa.h2.exception.ValueExtractionException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,19 +12,16 @@ import java.util.logging.Logger;
 public class PdfReceiver {
     private final Logger logger = Logger.getLogger(PdfReceiver.class.getName());
     private final PdfGenerateurService pdfGenerateurService;
-    private final MyWebSocketHandler myWebSocketHandler;
     @Autowired
     public PdfReceiver(PdfGenerateurService pdfGenerateurService, MyWebSocketHandler myWebSocketHandler) {
         this.pdfGenerateurService = pdfGenerateurService;
-        this.myWebSocketHandler = myWebSocketHandler;
     }
     /**
      * Méthode pour recevoir les messages de la file pdfQueue
      * @param message
-     * @throws IOException
      */
     @JmsListener(destination = "pdfQueue", containerFactory = "myFactory")
-    public void receivePdf(String message) throws IOException {
+    public void receivePdf(String message) {
         if(logger.isLoggable(Level.INFO)) {
             logger.info("Received <" + message + ">");
         }
@@ -43,10 +35,7 @@ public class PdfReceiver {
         }
         String fileName = "rapport_" + System.currentTimeMillis() + ".pdf";
         String path = "src/main/resources/" + fileName;
-        pdfGenerateurService.enqueuePdfGeneration(path, latitude, longitude, rayon, (pdfBytes) -> {
-            String base64Pdf = Base64.getEncoder().encodeToString(pdfBytes);
-            myWebSocketHandler.sendPdfGeneratedNotification(base64Pdf);
-        });
+        pdfGenerateurService.enqueuePdfGeneration(path, latitude, longitude, rayon, objectName -> logger.info("PDF téléversé : " + objectName));
     }
 
     /**

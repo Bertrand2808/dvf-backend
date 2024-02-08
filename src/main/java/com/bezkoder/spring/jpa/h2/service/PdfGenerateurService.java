@@ -2,6 +2,7 @@ package com.bezkoder.spring.jpa.h2.service;
 
 
 import com.bezkoder.spring.jpa.h2.business.Transaction;
+import com.bezkoder.spring.jpa.h2.config.MyWebSocketHandler;
 import com.bezkoder.spring.jpa.h2.repository.TransactionRepository;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -11,11 +12,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.Base64;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -29,15 +30,33 @@ public class PdfGenerateurService {
     private final Logger logger = Logger.getLogger(PdfGenerateurService.class.getName());
     private static final double EARTH_RADIUS = 6371e3; // en mètres
     private final TransactionRepository transactionRepository;
+    private final MinioClientService minioClientService;
+    private final MyWebSocketHandler myWebSocketHandler;
     private final Queue<Runnable> tasks = new LinkedList<>();
     private final Object lock = new Object();
-
-    public void enqueuePdfGeneration(String path, double latitude, double longitude, double rayon, Consumer<byte[]> onPdfGenerated) {
+    /**
+     * Méthode pour ajouter une tâche de génération de PDF dans la file d'attente
+     * @param path
+     * @param latitude
+     * @param longitude
+     * @param rayon
+     * @param onPdfGenerated
+     */
+    public void enqueuePdfGeneration(String path, double latitude, double longitude, double rayon, Consumer<String> onPdfGenerated) {
         Runnable task = () -> {
             try {
-                byte[] pdfBytes = pdfGenerate(path, latitude, longitude, rayon);
-                onPdfGenerated.accept(pdfBytes);
-            } catch (IOException e) {
+                byte[] pdfBytes = pdfGenerate(latitude, longitude, rayon);
+                Path pdfPath = Paths.get(path);
+                Files.createDirectories(pdfPath.getParent());
+                Files.write(pdfPath, pdfBytes);
+                String bucketName = "pdfs";
+                String objectName = "rapport_" + System.currentTimeMillis() + ".pdf";
+                minioClientService.uploadPdf(bucketName, objectName, pdfBytes);
+                onPdfGenerated.accept(objectName);
+                String base64Pdf = Base64.getEncoder().encodeToString(pdfBytes);
+                myWebSocketHandler.sendPdfGeneratedNotification(base64Pdf);
+                Files.delete(pdfPath);
+            } catch (Exception e) {
                 logger.log(Level.SEVERE, "Erreur lors de la génération du PDF", e);
             }
         };
@@ -52,7 +71,9 @@ public class PdfGenerateurService {
             }
         }
     }
-
+    /**
+     * Méthode pour traiter les tâches en file d'attente
+     */
     private void processQueue() {
         new Thread(() -> {
             Runnable task;
@@ -63,40 +84,40 @@ public class PdfGenerateurService {
                         break;
                     }
                 }
-                task.run(); // Exécute la tâche en dehors du bloc synchronized pour permettre à d'autres tâches d'être enfilées
+                task.run();
             }
         }).start();
     }
-
-    private byte[] pdfGenerate(String path, double latitude, double longitude, double rayon) throws IOException {
-//        PdfDocument pdf = createPdfDocument(path);
-//        Document document = createDocument(pdf, latitude, longitude, rayon);
+    /**
+     * Méthode pour générer un document PDF avec les transactions dans le rayon autour de la position saisie
+     * @param latitude
+     * @param longitude
+     * @param rayon
+     * @return tableau d'octets du document PDF
+     */
+    private byte[] pdfGenerate(double latitude, double longitude, double rayon) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(byteArrayOutputStream);
-
-        // Création de l'objet PdfDocument
         PdfDocument pdf = new PdfDocument(writer);
-        Document document = new Document(pdf);
-        document = createDocument(pdf, latitude, longitude, rayon);
+        Document document = createDocument(pdf, latitude, longitude, rayon);
         List<Transaction> transactionsDansRayon = getTransactionsInRadius(latitude, longitude, rayon);
-
         if (transactionsDansRayon.isEmpty()) {
             document.add(new Paragraph("Aucune transaction trouvée dans le rayon de " + rayon + " mètres autour de la position saisie."));
         } else {
             addTransactionsToDocument(document, transactionsDansRayon);
         }
         document.close();
-//        byte[] pdfBytes = closeAndReadPdf(pdf, path);
-
         logger.info("PDF généré et supprimé du disque.");
         return byteArrayOutputStream.toByteArray();
     }
-
-    private PdfDocument createPdfDocument(String path) throws IOException {
-        PdfWriter writer = new PdfWriter(path);
-        return new PdfDocument(writer);
-    }
-
+    /**
+     * Méthode pour créer un document PDF avec l'en-tête
+     * @param pdf
+     * @param latitude
+     * @param longitude
+     * @param rayon
+     * @return document PDF
+     */
     private Document createDocument(PdfDocument pdf, double latitude, double longitude, double rayon) {
         Document document = new Document(pdf);
         document.add(new Paragraph("Rapport des Transactions comprises dans le rayon de " + rayon + " mètres autour de la position :"));
@@ -105,7 +126,13 @@ public class PdfGenerateurService {
         document.add(new Paragraph("--------------------------------------"));
         return document;
     }
-
+    /**
+     * Méthode pour récupérer les transactions dans le rayon autour de la position saisie
+     * @param latitude
+     * @param longitude
+     * @param rayon
+     * @return liste des transactions dans le rayon
+     */
     private List<Transaction> getTransactionsInRadius(double latitude, double longitude, double rayon) {
         List<Transaction> transactions = transactionRepository.findAll();
         if(logger.isLoggable(Level.INFO)) {
@@ -116,7 +143,13 @@ public class PdfGenerateurService {
                 .filter(t -> calculerDistance(latitude, longitude, t.getLatitude(), t.getLongitude()) <= rayon)
                 .toList();
     }
-
+    /**
+     * Méthode pour ajouter :
+     * - information si aucune transaction n'est trouvée dans le rayon
+     * - les détails des transactions trouvées dans le rayon en appelant addTransactionDetails
+     * @param document
+     * @param transactionsDansRayon
+     */
     private void addTransactionsToDocument(Document document, List<Transaction> transactionsDansRayon) {
         if (transactionsDansRayon.isEmpty()) {
             document.add(new Paragraph("Aucune transaction trouvée dans le rayon autour de la position saisie."));
@@ -128,6 +161,11 @@ public class PdfGenerateurService {
         }
     }
 
+    /**
+     * Méthode pour ajouter les détails d'une transaction dans le document PDF
+     * @param document
+     * @param transaction
+     */
     private void addTransactionDetails(Document document, Transaction transaction) {
         document.add(new Paragraph("ID Mutation: " + transaction.getIdMutation()));
         if (transaction.getDateMutation() != null) {
@@ -159,17 +197,14 @@ public class PdfGenerateurService {
         }
     }
 
-    private byte[] closeAndReadPdf(PdfDocument pdf, String path) throws IOException {
-        PdfDocument document = pdf.getFirstPage().getDocument();
-        document.close();
-
-        Path pdfPath = Paths.get(path);
-        byte[] pdfBytes = Files.readAllBytes(pdfPath);
-        Files.delete(pdfPath);
-
-        return pdfBytes;
-    }
-
+    /**
+     * Méthode pour calculer la distance entre deux points géographiques
+     * @param lat1
+     * @param lon1
+     * @param lat2
+     * @param lon2
+     * @return distance en mètres afin de déterminer si une transaction est dans le rayon
+     */
     private double calculerDistance(double lat1, double lon1, double lat2, double lon2) {
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
